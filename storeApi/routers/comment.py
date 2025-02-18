@@ -7,9 +7,6 @@ post_table = {}
 comments_table={}
 
 
-def find_post(post_id:int):
-    return post_table.get(post_id)
-
 
 @router.post("/comment", response_model=comment, status_code=201)
 async def create_comment(comment: commentIn):
