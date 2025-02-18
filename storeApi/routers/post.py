@@ -1,49 +1,29 @@
-from fastapi import APIRouter, HTTPException
-from storeApi.models.post import UserPost,UserPostIn,comment,commentIn,userPostWithComments
+from fastapi import APIRouter
+from storeApi.models.post import UserPost,UserPostIn
+from .api import create_post,get_all_post,delete_post,update_post,find_post
 
 router=APIRouter()
 
-post_table = {}
-comments_table={}
-
-
-def find_post(post_id:int):
-    return post_table.get(post_id)
-
-
 @router.post('/',response_model=UserPost,status_code=201)
-async def create_post(post: UserPostIn):
-    data=post.dict()
-    last_record_id=len(post_table)
-    new_post={**data,"id":last_record_id}
-    post_table[last_record_id]=new_post
-    return new_post
+async def create_post_endpoint(post: UserPostIn):
+    return await create_post(post)
 
 
 @router.get("/post" , response_model=list[UserPost])
-async def get_all_post():
-    return list(post_table.values())
+async def get_all_post_endpoint():
+    return get_all_post()
 
 
 
 @router.delete("/post/{post_id}", status_code=204)
-async def delete_post(post_id: int):
-    post = find_post(post_id)
-    if not post:
-        raise HTTPException(status_code=404, detail="Post not found")
-    del post_table[post_id]
-    return None
+async def delete_post_endpoint(post_id: int):
+    return await delete_post(post_id)
+    
 
 
 @router.put("/post/{post_id}", response_model=UserPost)
-async def update_post(post_id: int, post: UserPostIn):
-    post_to_update = find_post(post_id)
-    if not post_to_update:
-        raise HTTPException(status_code=404, detail="Post not found")
-    data = post.dict()
-    updated_post = {**data, "id": post_id}
-    post_table[post_id] = updated_post
-    return updated_post
+async def update_post_endpoint(post_id: int, post: UserPostIn):
+    return await update_post(post_id, post)
 
 
      
