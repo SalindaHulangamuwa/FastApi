@@ -2,14 +2,18 @@ from fastapi import APIRouter, HTTPException, Depends
 from together import Together
 from storeApi.models.summarize import TextInput, SummaryResponse
 from dotenv import load_dotenv
-from post import find_post
+
 import os
 
 load_dotenv()
 
 router = APIRouter()
 
-post_table = {}
+summaryPost_table = {}
+
+
+def find_summaryPost(post_id:int):
+    return summaryPost_table.get(post_id)
 
 client = Together(api_key=os.getenv('TOGETHER_API_KEY'))
 
@@ -56,21 +60,21 @@ async def create_post_summary(input: TextInput, summary: str = Depends(get_summa
     if not summary:
         raise HTTPException(status_code=400, detail="Summary generation failed")
     
-    last_record_id = len(post_table)
+    last_record_id = len(summaryPost_table)
     new_post = {"id": last_record_id, "title": "Summarized Post", "content": summary}
-    post_table[last_record_id] = new_post
+    summaryPost_table[last_record_id] = new_post
     
     return new_post
 
 @router.get("/", response_model=list[SummaryResponse])
 async def get_all_posts():
-    return list(post_table.values())
+    return list(summaryPost_table.values())
     
 
 @router.delete("/postSummary/{post_id}", status_code=204)
-async def deletepostSummary(post_id: int):
-    post = find_post(post_id)
+async def deletePostSummary(post_id: int):
+    post = find_summaryPost(post_id)
     if not post:
         raise HTTPException(status_code=404, detail="Post not found")
-    del post_table[post_id]
+    del summaryPost_table[post_id]
     return None

@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException
 from storeApi.models.post import comment,commentIn,userPostWithComments
-from post import find_post
+from .post import find_post
 
 router=APIRouter()
 
