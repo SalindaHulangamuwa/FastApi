@@ -51,7 +51,7 @@ async def get_summary(input: TextInput):
 
 
 @router.post("/postSummary", response_model=SummaryResponse, status_code=201)
-async def create_post(input: TextInput, summary: str = Depends(get_summary)):
+async def create_post_summary(input: TextInput, summary: str = Depends(get_summary)):
     if not summary:
         raise HTTPException(status_code=400, detail="Summary generation failed")
     
@@ -60,3 +60,11 @@ async def create_post(input: TextInput, summary: str = Depends(get_summary)):
     post_table[last_record_id] = new_post
     
     return new_post
+
+@router.get("/", response_model=list[SummaryResponse])
+async def get_all_posts():
+    return list(post_table.values())
+    
+
+
+
