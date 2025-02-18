@@ -2,6 +2,7 @@ from fastapi import APIRouter, HTTPException, Depends
 from together import Together
 from storeApi.models.summarize import TextInput, SummaryResponse
 from dotenv import load_dotenv
+from post import find_post
 import os
 
 load_dotenv()
@@ -66,5 +67,10 @@ async def get_all_posts():
     return list(post_table.values())
     
 
-
-
+@router.delete("/postSummary/{post_id}", status_code=204)
+async def deletepostSummary(post_id: int):
+    post = find_post(post_id)
+    if not post:
+        raise HTTPException(status_code=404, detail="Post not found")
+    del post_table[post_id]
+    return None
