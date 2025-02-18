@@ -1,2 +1,6 @@
 fastapi
 uvicorn[standard]
+openai
+langchain
+langchain_community
+together
