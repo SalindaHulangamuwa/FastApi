@@ -11,7 +11,7 @@ async def create_post_endpoint(post: UserPostIn):
 
 @router.get("/post" , response_model=list[UserPost])
 async def get_all_post_endpoint():
-    return get_all_post()
+    return await get_all_post()
 
 
 

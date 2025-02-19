@@ -1,11 +1,6 @@
 from pydantic import BaseModel
-
+from typing import Optional
 
 class TextInput(BaseModel):
-    text: str
+    text: Optional[str] = None  
 
-
-class SummaryResponse(BaseModel):
-    id: int
-    title: str
-    content: str

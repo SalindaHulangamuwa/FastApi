@@ -16,11 +16,11 @@ async def create_post(post: UserPostIn):
     last_record_id=len(post_table)
     new_post={**data,"id":last_record_id}
     post_table[last_record_id]=new_post
-    return new_post
+    return  new_post
 
 
 async def get_all_post():
-    return list(post_table.values())
+    return  list(post_table.values())
 
 
 async def delete_post(post_id: int):
@@ -28,7 +28,7 @@ async def delete_post(post_id: int):
     if not post:
         raise HTTPException(status_code=404, detail="Post not found")
     del post_table[post_id]
-    return None
+    return  None
 
 
 async def update_post(post_id: int, post: UserPostIn):
@@ -38,5 +38,5 @@ async def update_post(post_id: int, post: UserPostIn):
     data = post.dict()
     updated_post = {**data, "id": post_id}
     post_table[post_id] = updated_post
-    return updated_post
+    return  updated_post
 

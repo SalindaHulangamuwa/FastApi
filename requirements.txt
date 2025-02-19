@@ -4,3 +4,4 @@ openai
 langchain
 langchain_community
 together
+pypdf
