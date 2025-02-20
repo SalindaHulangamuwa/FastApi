@@ -4,7 +4,7 @@ from storeApi.services.summarization import create_summarization_chain
 from storeApi.models.summarize import TextInput
 from storeApi.services.splitText import split_text_into_chunks
 from langchain.schema import Document
-from storeApi.routers.summaryApi import summarize_text
+from storeApi.api.summaryApi import summarize_text
 
 router = APIRouter()
 

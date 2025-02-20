@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 from storeApi.models.post import UserPost,UserPostIn
-from .api import create_post,get_all_post,delete_post,update_post,find_post
+from ..api.postApi import create_post,get_all_post,delete_post,update_post
 
 router=APIRouter()
 

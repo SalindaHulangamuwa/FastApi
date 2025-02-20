@@ -3,8 +3,7 @@ from langchain.chains import LLMChain
 from langchain.chains.combine_documents.stuff import StuffDocumentsChain
 from langchain.prompts import PromptTemplate
 from dotenv import load_dotenv
-from langchain_core.prompts import ChatPromptTemplate, PromptTemplate
-from storeApi.models.summarize import TextInput
+from langchain_core.prompts import ChatPromptTemplate
 import os
 
 load_dotenv()
