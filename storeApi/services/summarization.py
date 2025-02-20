@@ -1,59 +1,42 @@
 from langchain_community.llms import Together
-from langchain.chains import MapReduceDocumentsChain, ReduceDocumentsChain, LLMChain
+from langchain.chains import LLMChain
 from langchain.chains.combine_documents.stuff import StuffDocumentsChain
 from langchain.prompts import PromptTemplate
 from dotenv import load_dotenv
+from langchain_core.prompts import ChatPromptTemplate, PromptTemplate
+from storeApi.models.summarize import TextInput
 import os
 
 load_dotenv()
 
 together_api_key = os.getenv("TOGETHER_API_KEY")
 
-llm = Together(
-    model="togethercomputer/mistral-7b-instruct",
-    temperature=0,
-    together_api_key=together_api_key  
+
+def create_summarization_chain(documents):
+    llm = Together(
+        model="mistralai/Mixtral-8x7B-Instruct-v0.1", 
+        together_api_key=together_api_key,  
+        temperature=0.7, 
+        max_tokens=500,  
+    )
+
+    document_prompt = PromptTemplate(
+    input_variables=["page_content"], template="{page_content}"
 )
 
-def create_map_reduce_chain():
+    document_variable_name = "context"
 
-    # Map step
-    map_template = """The following is a chunk of text:
-    {text}
-    
-    Summarize this chunk in one or two sentences:"""
-    
-    map_prompt = PromptTemplate.from_template(map_template)
-    map_chain = LLMChain(llm=llm, prompt=map_prompt)
+    prompt = ChatPromptTemplate.from_template("Summarize this content: {context}")
 
-    # Reduce step
-    reduce_template = """The following are summaries of text chunks:
-    {context}
-    
-    Combine these summaries into a single, coherent summary:"""
-    
-    reduce_prompt = PromptTemplate.from_template(reduce_template)
-    
-    # Create reduce chain
-    reduce_chain = LLMChain(llm=llm, prompt=reduce_prompt)
-    
-    # Create StuffDocumentsChain
-    combine_documents_chain = StuffDocumentsChain(
-        llm_chain=reduce_chain,
-        document_variable_name="context"
+    llm_chain = LLMChain(llm=llm, prompt=prompt)
+
+    chain = StuffDocumentsChain(
+    llm_chain=llm_chain,
+    document_prompt=document_prompt,
+    document_variable_name=document_variable_name,
     )
 
-    # Create ReduceDocumentsChain
-    reduce_documents_chain = ReduceDocumentsChain(
-        combine_documents_chain=combine_documents_chain
-    )
+    summaries = chain.invoke(documents)
+    # summaries = TextInput(text=summaries)
 
-    # Create MapReduceDocumentsChain
-    map_reduce_chain = MapReduceDocumentsChain(
-        llm_chain=map_chain,
-        reduce_documents_chain=reduce_documents_chain,
-        document_variable_name="text",
-        return_intermediate_steps=False
-    )
-
-    return map_reduce_chain
+    return summaries
