@@ -38,5 +38,6 @@ def create_summarization_chain(documents):
 
     summaries = chain.invoke(documents)
     # summaries = TextInput(text=summaries)
+    # print(type(summaries))
 
-    return summaries
+    return (summaries)

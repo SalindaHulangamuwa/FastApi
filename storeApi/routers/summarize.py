@@ -23,10 +23,21 @@ async def summarize_post_endpoint(input: TextInput):
 
         stuff_chain = create_summarization_chain(documents)
 
-        return {"summary": stuff_chain}
-        # return summarize_text(stuff_chain)
+        # type casting 
+        summary_text = stuff_chain.get("output_text", "")
 
-    
+        if not summary_text:
+            raise ValueError("No summary generated")
+        
+        text_input = TextInput(text=summary_text)
+
+        result = summarize_text(text_input)
+        return {"summary": result}
+
+        # print(type(stuff_chain))
+
+        # return {"summary": stuff_chain}
+        # return summarize_text(stuff_chain)
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
