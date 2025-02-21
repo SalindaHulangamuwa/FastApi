@@ -8,7 +8,7 @@ from storeApi.services.token_utils import authenticate_user
 from datetime import timedelta
 
 
-ACCESS_TOKEN_EXPIRE_MINUTES = 30
+ACCESS_TOKEN_EXPIRE_MINUTES = 300
 
 def register_user(user: RegisterInput):
     
@@ -39,6 +39,7 @@ def login_user(form_data: OAuth2PasswordRequestForm = Depends()):
             headers={"WWW-Authenticate": "Bearer"},
         )
     access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+
     access_token = create_access_token(
         data={"sub": user["username"]}, expires_delta=access_token_expires
     )
