@@ -10,3 +10,5 @@ def summarize_text(text: TextInput):
     text_table[last_record_id]=new_text
     return new_text
     
+def get_all_summaries():
+    return  list(text_table.values())

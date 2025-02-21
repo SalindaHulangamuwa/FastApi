@@ -4,11 +4,11 @@ from storeApi.services.summarization import create_summarization_chain
 from storeApi.models.summarize import TextInput
 from storeApi.services.splitText import split_text_into_chunks
 from langchain.schema import Document
-from storeApi.api.summaryApi import summarize_text
+from storeApi.api.summaryApi import summarize_text, get_all_summaries
 
 router = APIRouter()
 
-@router.post("/summarize/")
+@router.post("/")
 async def summarize_post_endpoint(input: TextInput):
     try:
         text = await input_handle(input)
@@ -41,3 +41,9 @@ async def summarize_post_endpoint(input: TextInput):
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+    
+
+@router.get("/summarize/",response_model=list[TextInput])
+async def get_all_summaries_endpoint():
+    return await get_all_summaries()
+
