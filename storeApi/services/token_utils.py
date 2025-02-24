@@ -1,6 +1,5 @@
 from datetime import datetime, timedelta
 from fastapi import HTTPException, status ,Depends
-from typing import Annotated
 import jwt
 from fastapi.security import OAuth2PasswordBearer
 from dotenv import load_dotenv
