@@ -1,6 +1,6 @@
 
 from storeApi.services.embeddingDocument import embed_documents
-from storeApi.db.userDb import get_atlas_collection
+from storeApi.db.atlasDb import get_atlas_collection
 
 def get_query_results(query):
 
