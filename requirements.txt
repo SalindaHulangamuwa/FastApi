@@ -8,3 +8,6 @@ pypdf
 pyJWT 
 passlib
 pydantic[email]
+pinecone
+langchain_huggingface
+langchain_pinecone
