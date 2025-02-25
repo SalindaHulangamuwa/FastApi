@@ -1,6 +1,7 @@
 from fastapi import APIRouter
 from storeApi.services.retrieve import get_query_results
 from dotenv import load_dotenv
+from storeApi.models.query import Query
 from langchain_community.llms import Together
 import os
 
@@ -10,7 +11,7 @@ router=APIRouter()
 
 
 @router.post("/query/")
-async def query_rag(query: str):
+async def query_rag(query: Query):
 
     context_docs = get_query_results(query)
     context_string = " ".join([doc["text"] for doc in context_docs])

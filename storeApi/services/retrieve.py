@@ -21,7 +21,8 @@ def get_query_results(query):
             }
         }
     ]
-    results = get_atlas_collection.aggregate(pipeline)
+    collection=get_atlas_collection()
+    results = collection.aggregate(pipeline)
     array_of_results = []
     for doc in results:
         array_of_results.append(doc)
