@@ -1,6 +1,6 @@
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_pinecone import PineconeVectorStore
-from storeApi.services.indexingPinecone import indexing
+from storeApi.services.rag.indexingPinecone import indexing
 
 def vector_store_pinecone():
     index_name = "store-api"

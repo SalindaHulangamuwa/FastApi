@@ -14,7 +14,6 @@ comments_table={}
 async def create_comment_endpoint(comment: commentIn):
     return await create_comment(comment)
 
-
 @router.get("/post/{post_id}/comment", response_model=list[comment])
 async def get_comments_on_post_endpoint(post_id: int):
     return await get_comments_on_post(post_id)

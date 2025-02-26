@@ -1,6 +1,6 @@
 from storeApi.services.loadData import load_documents
-from storeApi.services.vectorStorePinecone import vector_store_pinecone
-from storeApi.services.splitDocument import split_documents
+from storeApi.services.rag.vectorStorePinecone import vector_store_pinecone
+from storeApi.services.rag.splitDocument import split_documents
 
 
 def load_data_pinecone():

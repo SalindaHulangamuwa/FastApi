@@ -1,4 +1,4 @@
-from storeApi.services.vectorStorePinecone import vector_store_pinecone
+from storeApi.services.rag.vectorStorePinecone import vector_store_pinecone
 
 def retrieve_pinecone(query):
     vector_store=vector_store_pinecone()

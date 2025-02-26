@@ -1,6 +1,6 @@
 from storeApi.services.loadData import load_documents
-from storeApi.services.splitDocument import split_documents
-from storeApi.services.embeddingDocument import embed_documents
+from storeApi.services.rag.splitDocument import split_documents
+from storeApi.services.rag2.embeddingDocument import embed_documents
 from storeApi.db.atlasDb import get_atlas_collection
 
 
